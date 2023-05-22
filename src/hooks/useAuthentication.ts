@@ -8,6 +8,7 @@ const useAuthentication = (apiURL: string) => {
   const [isAuthenticated, setIsAuthenticated] = useState(getTokenFromLS() !== null);
 
   const queryParameters = new URLSearchParams(window.location.search);
+
   const code = queryParameters.get("code");
   const state = queryParameters.get("state") ? JSON.parse(queryParameters.get("state") || "") : null;
 
@@ -31,7 +32,7 @@ const useAuthentication = (apiURL: string) => {
       })
       .catch((err) => {
         setLoading(false);
-        setError(err);
+        setError(err.message);
         removeTokenFromLS();
       });
   }, [token]);
