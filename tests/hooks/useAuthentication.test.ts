@@ -37,11 +37,12 @@ describe("useAuthentication", () => {
 
     global.fetch = mockFetch;
 
-    let hook: any;
+    let hook: unknown;
+
     await act(async () => {
       hook = renderHook(() => useAuthentication(apiURL));
     });
-    const { result } = hook;
+    const { result } = hook as { result: { current: ReturnType<typeof useAuthentication> } };
 
     expect(mockFetch).toHaveBeenCalledWith(`${apiURL}/auth?code=${code}`, {
       method: "POST",
@@ -68,11 +69,12 @@ describe("useAuthentication", () => {
 
     global.fetch = mockFetch;
 
-    let hook: any;
+    let hook: unknown;
+
     await act(async () => {
       hook = renderHook(() => useAuthentication(apiURL));
     });
-    const { result } = hook;
+    const { result } = hook as { result: { current: ReturnType<typeof useAuthentication> } };
 
     expect(mockFetch).toHaveBeenCalledWith(`${apiURL}/auth?code=${code}`, {
       method: "POST",
