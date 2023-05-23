@@ -1,5 +1,5 @@
 {
-    "name": "coursework-helper-hooks",
+    "name": "coursework-helper-ui",
     "license": "MIT",
     "version": "0.1.0",
     "main": "dist/index.js",
@@ -7,7 +7,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
-        "release": "pnpm run build && changeset publish",
+        "release": "pnpm run build && changeset publish -r",
         "lint": "pnpm eslint --ext .ts,.tsx src/",
         "test": "jest --maxWorkers 2"
     },
