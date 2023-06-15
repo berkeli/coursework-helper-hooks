@@ -85,10 +85,14 @@ describe("useAuthentication", () => {
     expect(result.current.error).toBe(error);
   });
 
-  test("signs out and removes token from localStorage", () => {
-    const { result } = renderHook(() => useAuthentication(apiURL));
+  test("signs out and removes token from localStorage", async () => {
+    let hook: unknown;
+    await act(async () => {
+      hook = renderHook(() => useAuthentication(apiURL));
+    });
+    const { result } = hook as { result: { current: ReturnType<typeof useAuthentication> } };
 
-    act(() => {
+    await act(async () => {
       result.current.signOut();
     });
 

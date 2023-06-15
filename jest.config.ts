@@ -1,9 +1,10 @@
 import type { Config } from "@jest/types";
-import { baseJestConfig } from "./jest.config.base";
 
-const config: Config.InitialOptions = {
-  ...baseJestConfig,
+export default {
+  preset: "ts-jest",
+  clearMocks: true,
+  coverageDirectory: "coverage",
+  testMatch: ["<rootDir>/tests/**/*.test.(ts|tsx)"],
   testEnvironment: "jsdom", // browser-like
-};
-
-export default config;
+  setupFilesAfterEnv: ["<rootDir>/tests/jest-setup.ts"],
+} as Config.InitialOptions;

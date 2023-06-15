@@ -20,6 +20,9 @@
       "dom"
     ],
   },
+  "include": [
+    "test/jest-setup.ts",
+  ],
   "exclude": [
     "node_modules",
     "lib",
@@ -28,5 +31,6 @@
     "stories",
     "jest.config.ts",
     "jest.config.*.ts"
-  ]
+  ],
+  "types": ["node", "jest", "@testing-library/jest-dom"],
 }
