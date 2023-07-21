@@ -1,5 +1,11 @@
 # coursework-helper-hooks
 
+## 1.1.0
+
+### Minor Changes
+
+- b91ed3f: Update function logic
+
 ## 1.0.0
 
 ### Major Changes
