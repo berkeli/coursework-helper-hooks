@@ -36,3 +36,28 @@ export const githubLoginUrl = (clientID: string, scopes?: string[]): string => {
   url.searchParams.append("scope", ["project", "repo"].concat(scopes || []).join(" "));
   return url.toString();
 };
+
+export async function cloneIssue(apiURL: string, token: string, module: string, sprint?: string, issue?: number) {
+  // Construct the URL based on the provided module and optional issue number
+  const url = issue ? new URL(`${apiURL}/github/clone/${module}/${issue}`) : new URL(`${apiURL}/github/clone/${module}`);
+
+  // If a sprint parameter is provided, append it to the URL's search parameters
+  if (sprint) {
+    url.searchParams.append("sprint", sprint);
+  }
+
+  // Make a POST request to the constructed URL with the required headers
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json()) // Parse the response as JSON
+    .then((data) => {
+      if (data.error) {
+        throw new Error(data.error); // Throw an error if the response contains an error property
+      }
+      return data; // Return the data if no error occurred
+    });
+}

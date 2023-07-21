@@ -62,6 +62,7 @@ const useAuthentication = (apiURL: string): UseAuthenticationReturn => {
         }
         setTokenToLS(data.token);
         setToken(data.token);
+        setIsAuthenticated(true);
         setLoading(false);
       })
       .catch((err) => {
@@ -69,7 +70,7 @@ const useAuthentication = (apiURL: string): UseAuthenticationReturn => {
         setError(err.message);
         removeTokenFromLS();
       });
-  }, [token]);
+  }, [code]);
 
   const signOut = () => {
     removeTokenFromLS();

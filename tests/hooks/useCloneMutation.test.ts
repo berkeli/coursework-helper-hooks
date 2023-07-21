@@ -1,10 +1,11 @@
 import { renderHook, act } from "@testing-library/react";
-import useCloneButton from "../../src/hooks/useCloneButton";
+import useCloneMutation from "../../src/hooks/useCloneMutation";
 
 describe("useCloneButton", () => {
   const mockApiURL = "https://example.com/api";
   const mockToken = "example-token";
   const mockModule = "example-module";
+  const mockSprint = "example-sprint";
   const mockIssue = 1;
 
   beforeEach(() => {
@@ -21,7 +22,7 @@ describe("useCloneButton", () => {
   });
 
   it("should clone without issue and return loading, error, and success states", async () => {
-    const { result } = renderHook(() => useCloneButton(mockApiURL, mockToken, mockModule, mockIssue));
+    const { result } = renderHook(() => useCloneMutation(mockApiURL, mockToken, mockModule, mockSprint, mockIssue));
 
     expect(result.current.loading).toBe(false);
     expect(result.current.error).toBeUndefined();
@@ -37,7 +38,7 @@ describe("useCloneButton", () => {
   });
 
   it("should clone with issue and return loading, error, and success states", async () => {
-    const { result } = renderHook(() => useCloneButton(mockApiURL, mockToken, mockModule, mockIssue));
+    const { result } = renderHook(() => useCloneMutation(mockApiURL, mockToken, mockModule, mockSprint, mockIssue));
 
     expect(result.current.loading).toBe(false);
     expect(result.current.error).toBeUndefined();
@@ -68,7 +69,7 @@ describe("useCloneButton", () => {
       })
     ) as jest.Mock;
 
-    const { result } = renderHook(() => useCloneButton(mockApiURL, mockToken, mockModule));
+    const { result } = renderHook(() => useCloneMutation(mockApiURL, mockToken, mockModule));
 
     await act(async () => {
       result.current.clone();
@@ -87,7 +88,7 @@ describe("useCloneButton", () => {
     const mockErrorMessage = "Request rejected";
     global.fetch = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
 
-    const { result } = renderHook(() => useCloneButton(mockApiURL, mockToken, mockModule));
+    const { result } = renderHook(() => useCloneMutation(mockApiURL, mockToken, mockModule));
 
     await act(async () => {
       result.current.clone();

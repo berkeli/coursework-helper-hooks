@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { cloneIssue } from "../helpers";
 
-interface UseCloneButtonReturn {
+interface UseCloneMutationReturn {
   /**
    * Boolean representing whether the cloning process is loading or not.
    */
@@ -27,32 +28,24 @@ interface UseCloneButtonReturn {
  * @param issue - Optional. The issue number to clone.
  * @returns An object containing loading, error, success states, and a clone function.
  */
-const useCloneButton = (apiURL: string, token: string, module: string, issue?: number): UseCloneButtonReturn => {
+const useCloneMutation = (apiURL: string, token: string, module: string, sprint?: string, issue?: number): UseCloneMutationReturn => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState(null);
 
   const clone = () => {
     setLoading(true);
-    const url = issue ? `${apiURL}/github/clone/${module}/${issue}` : `${apiURL}/github/clone/${module}`;
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
+    cloneIssue(apiURL, token, module, sprint, issue)
       .then((data) => {
-        if (data.error) {
-          throw new Error(data.error);
-        }
-        setLoading(false);
-        setSuccess(data.message);
+        setSuccess(data);
       })
       .catch((err) => {
-        setLoading(false);
         setError(err.message);
+        setSuccess(null);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -64,4 +57,4 @@ const useCloneButton = (apiURL: string, token: string, module: string, issue?: n
   };
 };
 
-export default useCloneButton;
+export default useCloneMutation;
